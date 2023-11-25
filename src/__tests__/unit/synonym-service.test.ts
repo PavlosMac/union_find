@@ -40,4 +40,10 @@ describe('SynonymService Class', () => {
         expect(synonym.getSynonyms('orange')).toEqual(['orange', 'kiwi']);
         expect(synonym.getSynonyms('banana')).toEqual(['apple', 'banana']);
     });
+
+    it('should add synonyms as key and list correctly', () => {
+        synonym.addSynonyms({parent: 'blue', children: ['azure', 'cerulean', 'cobalt', 'indigo', 'navy', 'sapphire']});
+        console.log(synonym.getSynonyms('blue'))
+        expect(synonym.getSynonyms('blue')).toEqual(expect.arrayContaining(['azure', 'cerulean', 'cobalt', 'indigo', 'navy', 'sapphire', 'blue']));
+    });
 });

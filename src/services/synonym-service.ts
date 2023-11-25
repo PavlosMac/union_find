@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-// @ts-ignore
 
 export class SynonymService {
 
@@ -34,11 +32,6 @@ export class SynonymService {
 
     find(word: string): string {
         if(!this.parent.get(word)) return '';
-        // if (!this.parent.has(word)) {
-        //     this.parent.set(word, word); // If word is not present, set it as its own parent
-        //     this.size.set(word, 1);
-        //     return word; // Return word as its own parent
-        // }
         if (word !== this.parent.get(word)) {
             this.parent.set(word, this.find(this.parent.get(word)!));
         }
@@ -62,9 +55,9 @@ export class SynonymService {
     // given a canonical word and its synonyms, add them to the service and unify them, if they are not already present create them, if they are already unified, do nothing
     addSynonyms(synonyms: {parent: string, children: string[]}) {
         const { parent, children } = synonyms;
-        if(!parent) this.addWord(parent);
+        this.addWord(parent);
         for(const child of children) {
-            if(!child) this.addWord(child);
+            this.addWord(child);
             this.union(parent, child);
         }
     }
@@ -80,19 +73,9 @@ export class SynonymService {
                 associatedWords.push(currentWord as string);
             }
         }
-        // console.log(associatedWords)
         return associatedWords;
     }
 }
 
 const synonymWordService = new SynonymService();
 export default synonymWordService;
-
-// buildUnion(synonymPairs: [string, string][]) {
-//     for (const [parent, child] of synonymPairs) {
-//         if(!this.find(parent)) this.addWord(parent);
-//         if(!this.find(child)) this.addWord(child);
-
-//         this.union(parent, child);
-//     }
-// }
