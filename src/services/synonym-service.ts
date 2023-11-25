@@ -33,11 +33,12 @@ export class SynonymService {
     }
 
     find(word: string): string {
-        if (!this.parent.has(word)) {
-            this.parent.set(word, word); // If word is not present, set it as its own parent
-            this.size.set(word, 1);
-            return word; // Return word as its own parent
-        }
+        if(!this.parent.get(word)) return '';
+        // if (!this.parent.has(word)) {
+        //     this.parent.set(word, word); // If word is not present, set it as its own parent
+        //     this.size.set(word, 1);
+        //     return word; // Return word as its own parent
+        // }
         if (word !== this.parent.get(word)) {
             this.parent.set(word, this.find(this.parent.get(word)!));
         }
@@ -58,16 +59,20 @@ export class SynonymService {
         return groups;
     }
 
-    buildGroups(wordPairs: [string, string][]) {
-        for (const [parent, child] of wordPairs) {
-            this.addWord(parent);
-            this.addWord(child);
+    // given a canonical word and its synonyms, add them to the service and unify them, if they are not already present create them, if they are already unified, do nothing
+    addSynonyms(synonyms: {parent: string, children: string[]}) {
+        const { parent, children } = synonyms;
+        if(!parent) this.addWord(parent);
+        for(const child of children) {
+            if(!child) this.addWord(child);
             this.union(parent, child);
         }
     }
 
-    getSynonyms(word: string): string[] {
+    getSynonyms(word: string): string[] | null {
         const root = this.find(word);
+        if(!root) return null;
+
         const associatedWords: string[] = [];
 
         for (const [currentWord,] of this.parent.entries()) {
@@ -75,7 +80,7 @@ export class SynonymService {
                 associatedWords.push(currentWord as string);
             }
         }
-        console.log(associatedWords)
+        // console.log(associatedWords)
         return associatedWords;
     }
 }
@@ -83,20 +88,11 @@ export class SynonymService {
 const synonymWordService = new SynonymService();
 export default synonymWordService;
 
-// // Example usage:
-// const unionFind = new UnionFind();
-// const wordPairs: [string, string][] = [
-//     ["apple", "red_apple"],
-//     ["apple", "green_apple"],
-//     ["orange", "orange_juice"],
-//     ["kiwi", "kiwi_fruit"],
-// ];
+// buildUnion(synonymPairs: [string, string][]) {
+//     for (const [parent, child] of synonymPairs) {
+//         if(!this.find(parent)) this.addWord(parent);
+//         if(!this.find(child)) this.addWord(child);
 
-// for (const [parent, child] of wordPairs) {
-//     unionFind.addWord(parent);
-//     unionFind.addWord(child);
+//         this.union(parent, child);
+//     }
 // }
-
-// unionFind.buildGroups(wordPairs);
-
-// console.log(unionFind.getGroups());
