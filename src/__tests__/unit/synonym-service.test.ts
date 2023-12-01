@@ -43,7 +43,7 @@ describe('SynonymService Class', () => {
 
     it('should add synonyms as key and list correctly', () => {
         synonym.addSynonyms({parent: 'blue', children: ['azure', 'cerulean', 'cobalt', 'indigo', 'navy', 'sapphire']});
-        console.log(synonym.getSynonyms('blue'))
+        
         expect(synonym.getSynonyms('blue')).toEqual(expect.arrayContaining(['azure', 'cerulean', 'cobalt', 'indigo', 'navy', 'sapphire', 'blue']));
     });
 });

@@ -5,4 +5,4 @@ export const synRoutes: Router = Router();
 
 synRoutes
     .get('/synonyms', SynonymController.getSynonymnsByWord)
-    .post('/synonym/new', SynonymController.createNewSynonymBond)
+    .post('/synonym/new', SynonymController.createNewSynonymGroup)
