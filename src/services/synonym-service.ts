@@ -1,4 +1,3 @@
-
 export class SynonymService {
 
     parent: Map<string, string>;
@@ -31,7 +30,7 @@ export class SynonymService {
     }
 
     find(word: string): string {
-        if(!this.parent.get(word)) return '';
+        if (!this.parent.get(word)) return '';
         if (word !== this.parent.get(word)) {
             this.parent.set(word, this.find(this.parent.get(word)!));
         }
@@ -52,11 +51,11 @@ export class SynonymService {
         return groups;
     }
 
-    // given a canonical word and its synonyms, add them to the service and unify them, if they are not already present create them, if they are already unified, do nothing
-    addSynonyms(synonyms: {parent: string, children: string[]}) {
+    // given a canonical word and its synonyms, add them to the service and unify them, if they are not already present create them
+    addSynonyms(synonyms: { parent: string, children: string[] }) {
         const { parent, children } = synonyms;
         this.addWord(parent);
-        for(const child of children) {
+        for (const child of children) {
             this.addWord(child);
             this.union(parent, child);
         }
@@ -64,7 +63,7 @@ export class SynonymService {
 
     getSynonyms(word: string): string[] | null {
         const root = this.find(word);
-        if(!root) return null;
+        if (!root) return null;
 
         const associatedWords: string[] = [];
 
