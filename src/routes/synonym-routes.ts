@@ -4,6 +4,6 @@ import { SynonymController } from '../controllers/synonym-controller';
 export const synRoutes: Router = Router();
 
 synRoutes
-    .get('/', (_req: Request, res: Response) => { res.send({ health: 'ok' }) })
+    .get('/health', (_req: Request, res: Response) => { res.send({ health: 'ok' }) })
     .get('/synonyms', SynonymController.getSynonymnsByWord)
     .post('/synonym/new', SynonymController.createNewSynonymGroup)
