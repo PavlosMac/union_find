@@ -8,9 +8,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
     "test": "jest --detectOpenHandles",
-    "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "build": "rimraf dist && tsc"
+    "start": "node dist/index.js",
+    "postinstall": "tsc",
+    "deploy": "git add . && git commit -m Heroku && git push heroku master"
   },
   "dependencies": {
     "@types/jest": "^29.5.9",
@@ -35,9 +35,5 @@
     "tsup": "^6.0.1",
     "typescript": "^5.2.2"
   },
-  "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
-]
+  "engines": { "node": "20.X" }
 }
