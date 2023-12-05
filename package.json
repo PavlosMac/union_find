@@ -8,6 +8,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
     "test": "jest --detectOpenHandles",
+    "ts.check": "tsc --project tsconfig.json",
     "add-build": "git add dist",
     "build": "rimraf dist && tsc"
   },
@@ -35,6 +36,7 @@
     "typescript": "^5.2.2"
   },
   "pre-commit": [
+    "ts.check",
     "build",
     "add-build"
 ]
